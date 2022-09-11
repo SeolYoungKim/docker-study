@@ -1,13 +1,13 @@
-version: "3"
-services:
-  docker-study-db:
-    image: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=myDB
-  docker-study:
-    build: .  # docker-compose.yml이 있는 위치의 Dockerfile로 빌드할 것임을 알림.
-    ports:
-      - "8080:8080"  # port binding -> 이걸 해야 내 컴터에서 접속됨
-    depends_on:  # docker-study 가 docker-study-db에 의존함을 알림.
-      - docker-study-db
+#version: "3"
+#services:
+#  docker-study-db:
+#    image: mysql
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=password
+#      - MYSQL_DATABASE=myDB
+#  docker-study:
+#    build: .  # docker-compose.yml이 있는 위치의 Dockerfile로 빌드할 것임을 알림.
+#    ports:
+#      - "8080:8080"  # port binding -> 이걸 해야 내 컴터에서 접속됨
+#    depends_on:  # docker-study 가 docker-study-db에 의존함을 알림.
+#      - docker-study-db
