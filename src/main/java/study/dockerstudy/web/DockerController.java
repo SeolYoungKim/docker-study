@@ -13,7 +13,7 @@ public class DockerController {
     @GetMapping("/")
     public String docker() {
         log.info("THIS IS DOCKER!!!!!!");
-        return "Hello Docker!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+        return "Docker is very hard :(";
     }
 
     @PostMapping("/")
