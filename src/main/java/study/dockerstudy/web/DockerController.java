@@ -1,23 +1,43 @@
 package study.dockerstudy.web;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import study.dockerstudy.PostDto.PostDto;
+import study.dockerstudy.domain.Post;
+import study.dockerstudy.repository.PostRepository;
 
 @Slf4j
-@RestController
+@Controller
+@RequiredArgsConstructor
 public class DockerController {
 
+    private final PostRepository postRepository;
+
     @GetMapping("/")
-    public String docker() {
-        log.info("THIS IS DOCKER!!!!!!");
-        return "Docker is very hard :(";
+    public String docker(Model model) {
+        model.addAttribute("post", new PostDto());
+        return "index";
     }
 
     @PostMapping("/")
-    public String docker2(@RequestBody String body) {
-        return body;
+    public String docker2(@ModelAttribute PostDto postDto) {
+
+        Post post = Post.builder()
+                .title(postDto.getTitle())
+                .contents(postDto.getContents())
+                .build();
+
+        postRepository.save(post);
+
+        return "redirect:/post/" + post.getId();
+    }
+
+    @GetMapping("/post/{id}")
+    public String docker3(@PathVariable Long id, Model model) {
+        model.addAttribute("post", postRepository.findById(id).get());
+        return "post";
     }
 }
