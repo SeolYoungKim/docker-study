@@ -9,6 +9,11 @@ import study.dockerstudy.PostDto.PostDto;
 import study.dockerstudy.domain.Post;
 import study.dockerstudy.repository.PostRepository;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -23,21 +28,20 @@ public class DockerController {
     }
 
     @PostMapping("/")
-    public String docker2(@ModelAttribute PostDto postDto) {
+    public String docker2(@ModelAttribute PostDto postDto) throws IOException {
 
-        Post post = Post.builder()
-                .title(postDto.getTitle())
-                .contents(postDto.getContents())
-                .build();
+//        Post post = Post.builder()
+//                .title(postDto.getTitle())
+//                .contents(postDto.getContents())
+//                .build();
+//
+//        postRepository.save(post);
 
-        postRepository.save(post);
+        try (FileWriter out = new FileWriter(postDto.getTitle() + "/file.txt")) {
 
-        return "redirect:/post/" + post.getId();
-    }
+            out.write(postDto.getContents());
 
-    @GetMapping("/post/{id}")
-    public String docker3(@PathVariable Long id, Model model) {
-        model.addAttribute("post", postRepository.findById(id).get());
-        return "post";
+        }
+            return "redirect:/";
     }
 }
